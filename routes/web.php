@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FlightController; // Add this line to import the controller
+use App\Http\Controllers\BookingController; // Add this line to import the BookingController
+use App\Http\Controllers\FlightController; // Add this line to import the FlightController
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -11,21 +12,16 @@ Route::get('/', function () {
 });
 
 // Booking routes
-Route::get('/booknow', function () {
-    return view('booknow');
-})->name('booknow');
-Route::post('/booknow', function () {
-})->name('booknow.submit');
+Route::get('/booknow', [BookingController::class, 'showForm'])->name('booknow');  // Display the booking form
+Route::post('/booknow', [BookingController::class, 'submitBooking'])->name('booknow.submit');  // Handle form submission
 
 // Search flight route (GET)
 Route::get('/searchflight', function () {
-    return view('searchflight');  // Create the searchflight.blade.php view
+    return view('searchflight');  // Display the searchflight form
 })->name('searchflight');
 
 // Search flight route (POST)
-Route::post('/searchflight', [FlightController::class, 'search'])->name('searchflight.submit');
-
-// End booking route
+Route::post('/searchflight', [FlightController::class, 'search'])->name('searchflight.submit');  // Handle search submission
 
 // Dashboard route with authentication middleware
 Route::get('/dashboard', function () {

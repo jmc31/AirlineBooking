@@ -69,7 +69,27 @@
 
             <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">Search Flights</button>
         </form>
-    </div>
 
+        <!-- Search Results Section -->
+        @if(isset($flights) && $flights->isNotEmpty())
+            <div class="mt-10">
+                <h3 class="text-xl font-semibold">Available Flights</h3>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($flights as $flight)
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h4 class="text-lg font-bold">{{ $flight->departure }} to {{ $flight->destination }}</h4>
+                            <p class="text-gray-600">{{ $flight->departure_date }}</p>
+                            <p class="text-gray-600">Class: {{ ucfirst($flight->class) }}</p>
+                            <p class="text-gray-600">Seats Available: {{ $flight->available_seats }}</p>
+                            <p class="text-gray-600">Flight Type: {{ ucfirst($flight->flight_type) }}</p>
+                            <a href="{{ route('booknow') }}" class="mt-4 block bg-blue-600 text-white p-2 rounded-lg text-center hover:bg-blue-700">Book Now</a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @elseif(isset($flights))
+            <div class="mt-10 text-red-600">No flights found based on your search criteria.</div>
+        @endif
+    </div>
 </body>
 </html>
